@@ -36,9 +36,9 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/"]
 CSRF_ALLOWED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/"]
 CORS_ORIGINS_WHITELIST = ["https://controle-tarefas-backend-production.up.railway.app/"]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
-# Application definition
+# Application definition\
 
 INSTALLED_APPS = [
     'django.contrib.admin',
