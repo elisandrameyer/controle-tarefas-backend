@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-ykq7!=z2vaf-wx5*0!rl^f&wocmjc*l2bv75e*9sft&3^^veg_
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    os.getenv('PRODUCTION_URL'),
+    'controle-tarefas-backend-production.up.railway.app',
     '127.0.0.1'
 ]
 
