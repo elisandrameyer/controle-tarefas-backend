@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +29,7 @@ SECRET_KEY = 'django-insecure-ykq7!=z2vaf-wx5*0!rl^f&wocmjc*l2bv75e*9sft&3^^veg_
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'controle-tarefas-backend-production.up.railway.app',
+    os.getenv('PRODUCTION_URL'),
     '127.0.0.1'
 ]
 
