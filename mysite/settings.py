@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-ykq7!=z2vaf-wx5*0!rl^f&wocmjc*l2bv75e*9sft&3^^veg_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'controle-tarefas-backend-production.up.railway.app',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tarefas',
     'rest_framework',
     "corsheaders",
 
