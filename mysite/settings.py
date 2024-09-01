@@ -30,6 +30,10 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
+CSRF_TRUSTED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/"]
+CSRF_ALLOWED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/"]
+CORS_ORIGINS_WHITELIST = ["https://controle-tarefas-backend-production.up.railway.app/"]
+
 
 # Application definition
 
