@@ -12,4 +12,11 @@ class Tarefa(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    status = models.BooleanField(blank=True, default=True)
+    
+class TarefaTodos(models.Model):
+    nome = models.CharField(max_length=255)
+    descricao = models.CharField(max_length=255)
+    status = models.BooleanField(blank=True, default=True)
+
 
