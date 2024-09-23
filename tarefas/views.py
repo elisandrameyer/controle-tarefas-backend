@@ -12,6 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import (
     logout as django_logout
 )
+from rest_framework.exceptions import NotFound
 
 
 @api_view(['POST'])
@@ -66,6 +67,32 @@ def buscar_tarefas_todos(request):
         serializer = TarefaTodosSerializer(tarefas, many=True) 
         return Response(serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def concluir_tarefa(request):
+    if request.method == 'POST':
+        id_tarefa = request.data['id']
+        tipo = request.data['tipo']
+
+        try:
+            if tipo == 'todos':
+                tarefa = TarefaTodos.objects.get(id=id_tarefa)
+                tarefa.status = False
+                tarefa.save()
+                serializer = TarefaTodosSerializer(tarefa)
+            else:
+                tarefa = Tarefa.objects.get(id=id_tarefa)
+                tarefa.status = False
+                tarefa.save()
+                serializer = TarefaSerializer(tarefa)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except TarefaTodos.DoesNotExist:
+            raise NotFound("Tarefa não encontrada.")
+        except Tarefa.DoesNotExist:
+            raise NotFound("Tarefa não encontrada.")
+
 
 
 @api_view(['POST'])
