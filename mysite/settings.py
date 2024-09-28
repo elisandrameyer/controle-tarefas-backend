@@ -30,29 +30,41 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'controle-tarefas-backend-production.up.railway.app',
-    '127.0.0.1'
+    '127.0.0.1',
+    'controle-tarefas.up.railway.app'
 ]
 
-CSRF_TRUSTED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/"]
-CSRF_ALLOWED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/"]
-CORS_ORIGINS_WHITELIST = ["https://controle-tarefas-backend-production.up.railway.app/"]
+CSRF_TRUSTED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/", "https://controle-tarefas.up.railway.app/"]
+CSRF_ALLOWED_ORIGINS = ["https://controle-tarefas-backend-production.up.railway.app/", "https://controle-tarefas.up.railway.app/"]
+CORS_ORIGINS_WHITELIST = ["https://controle-tarefas-backend-production.up.railway.app/", "https://controle-tarefas.up.railway.app/"]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
-# Application definition
+# Application definition\
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tarefas',
     'rest_framework',
-    "corsheaders",
+    'corsheaders',
+    'rest_framework.authtoken'
 
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,5 +151,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://controle-tarefas.up.railway.app"
 ]

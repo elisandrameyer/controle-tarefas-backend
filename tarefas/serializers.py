@@ -1,14 +1,19 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
-from .models import Tarefa
+from .models import Tarefa, TarefaTodos
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer ):
     class Meta:
         model = User
         fields = ['url', 'username', 'email', 'groups']
 
-class TarefaSerializer(serializers.HyperlinkedModelSerializer):
+class TarefaSerializer(serializers.ModelSerializer ):
     class Meta:
         model = Tarefa
-        fields = ['nome', 'descricao', 'atribuicao',  ]
+        fields = ['id', 'nome', 'descricao', 'atribuicao', 'status' ]
+        
+class TarefaTodosSerializer(serializers.ModelSerializer ):
+    class Meta:
+        model = TarefaTodos
+        fields = ['id', 'nome', 'descricao', 'status' ]
