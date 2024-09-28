@@ -72,7 +72,7 @@ def buscar_tarefas_todos(request):
 def concluir_tarefa(request):
     if request.method == 'POST':
         id_tarefa = request.data['id']
-        tipo = request.data['tipo']
+        tipo = request.data['tipo'] 
 
         try:
             if tipo == 'todos':
