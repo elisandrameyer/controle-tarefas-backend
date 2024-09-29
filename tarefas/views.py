@@ -17,15 +17,20 @@ from rest_framework.exceptions import NotFound
 
 @api_view(['POST'])
 def cadastrar_tarefa(request):
-    if request.data['atribuicao'] == 0:
-        serializer = TarefaTodosSerializer(data=request.data)
-    else:
-        serializer = TarefaSerializer(data=request.data)
-    print(serializer)
+    atribuicoes = request.data['atribuicoes']
+    if 0 in atribuicoes:
+        serializer_todos = TarefaTodosSerializer(data=request.data)
+        request.data['atribuicoes'].remove(0)
+        if serializer_todos.is_valid():
+            serializer_todos.save()
+        else:
+            return Response(serializer_todos.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer = TarefaSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])
@@ -53,7 +58,21 @@ def buscar_tarefas_usuario(request):
         try:
             token = Token.objects.get(key=token_key)
             user = token.user
-            tarefas = Tarefa.objects.filter(atribuicao_id=user.id, status=True)
+            tarefas = Tarefa.objects.filter(atribuicoes=user, status=True)
+            serializer = TarefaSerializer(tarefas, many=True) 
+        except Token.DoesNotExist:
+            return Response({'error': 'Token inválido'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def buscar_tarefas_concluidas_usuario(request):
+    if request.method == 'GET':
+        token_key = request.headers.get('Authorization', '').replace('Token ', '')
+        try:
+            token = Token.objects.get(key=token_key)
+            user = token.user
+            tarefas = Tarefa.objects.filter(atribuicoes=user, status=False)
             serializer = TarefaSerializer(tarefas, many=True) 
         except Token.DoesNotExist:
             return Response({'error': 'Token inválido'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -64,6 +83,14 @@ def buscar_tarefas_usuario(request):
 def buscar_tarefas_todos(request):
     if request.method == 'GET':
         tarefas = TarefaTodos.objects.filter(status=True)
+        serializer = TarefaTodosSerializer(tarefas, many=True) 
+        return Response(serializer.data)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def buscar_tarefas_concluidas_todos(request):
+    if request.method == 'GET':
+        tarefas = TarefaTodos.objects.filter(status=False)
         serializer = TarefaTodosSerializer(tarefas, many=True) 
         return Response(serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
