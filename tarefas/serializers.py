@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer ):
 class TarefaSerializer(serializers.ModelSerializer ):
     class Meta:
         model = Tarefa
-        fields = ['id', 'nome', 'descricao', 'atribuicao', 'status' ]
+        fields = ['id', 'nome', 'descricao', 'atribuicoes', 'status' ]
         
 class TarefaTodosSerializer(serializers.ModelSerializer ):
     class Meta:

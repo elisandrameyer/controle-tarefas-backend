@@ -7,16 +7,15 @@ from django.conf import settings
 
 class Tarefa(models.Model):
     nome = models.CharField(max_length=255)
-    descricao = models.CharField(max_length=255)
-    atribuicao = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+    descricao = models.CharField(max_length=255, blank=True)
+    atribuicoes = models.ManyToManyField(
+        settings.AUTH_USER_MODEL
     )
     status = models.BooleanField(blank=True, default=True)
     
 class TarefaTodos(models.Model):
     nome = models.CharField(max_length=255)
-    descricao = models.CharField(max_length=255)
+    descricao = models.CharField(max_length=255, blank=True)
     status = models.BooleanField(blank=True, default=True)
 
 
